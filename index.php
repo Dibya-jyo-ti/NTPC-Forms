@@ -13,14 +13,17 @@
 
     <div class="row">
         <div class = "col-lg-3">
-            <button class="btn btn-primary" id="label_select" onclick="setEdit();">Click to edit Item</button>
-            <button class="btn btn-primary" id="add_item" onclick="addCheckBox();" disabled="true" hidden>Add Item</button>
+            <button class="btn btn-primary" id="label_select" onclick="setEdit();" disabled="true">Click to edit Item</button>
+            <button class="btn btn-primary" id="add_item" onclick="addItem();" disabled="true" hidden>Add Item</button>
+            <button class="btn btn-danger" id="del_item" onclick="delItem();">Delete Item</button>
         </div>
 
         <div class = "col-lg-4" id = "mid">
             <button class="btn btn-primary" onclick="generate('label');">Add Label</button>
             <button class="btn btn-primary" onclick="generate('text');">Add Textfield</button>
+            <button class="btn btn-primary" onclick="generate('textarea');">Add Textarea</button>
             <button class="btn btn-primary" onclick="generate('checkbox');">Add Check-Area</button>
+            <button class="btn btn-primary" onclick="generate('radiobutton');">Add Radio-Area</button>
             <!--<script>generate("label");</script>-->
         </div>
 
