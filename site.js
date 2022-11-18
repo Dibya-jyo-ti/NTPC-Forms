@@ -3,6 +3,7 @@ var labelVal="";
 const modules=[];
 const internals=[];
 const text=[];
+const hidden=[];
 var num = -1;
 var del = false;
 var foc;
@@ -62,6 +63,36 @@ function addItem()
     else
         addRadioBtn();
 }
+function delItem()
+{
+    console.log(foc+" "+modules[foc].length)
+    if(modules[foc][1].length > 0 && hidden[foc][2].filter((x) => !x).length > 1)
+    {
+        document.getElementById(modules[foc][2][foc_i]).hidden = true;
+        hidden[foc][2][foc_i] = true;
+        foc_i=foc_i-1;
+        while(hidden[foc][2][foc_i] && foc_i > -1)
+            foc_i=foc_i-1;
+        if (foc_i == -1)
+            while (hidden[foc][2][++foc_i]);
+        getFocus2(foc, foc_i);
+    }
+    else
+    {
+        document.getElementById("div-"+(foc+1)).hidden = true;;
+        hidden[foc][0] = true;
+        foc=foc-1;
+        while(hidden[foc][2][foc_i] && foc_i > -1)
+            foc_i=foc_i-1;
+        if (foc_i == -1)
+            while (hidden[foc][2][++foc_i]);
+        if (foc < modules.length)
+            getFocus(foc);
+        else
+            disable("add_item");
+    }
+}
+
 
 function generate(type) //Generates all form components
 {
@@ -101,6 +132,8 @@ function genLabel(par) //Generates label of a form component
     internals[num]="";
     text[num] = [];
     text[num][0]="";
+    hidden[num]=[];
+    hidden[num][0]=false;
     elem = document.createElement("div");
     elem.setAttribute("class","label");
     elem.setAttribute("name", modules[num][0]);
@@ -123,6 +156,9 @@ function genText(par) //Generates a textfield form component
     text[num][1]="";
     text[num][2]=[];
     text[num][2][0]="";
+    hidden[num][1]=false;
+    hidden[num][2]=[];
+    hidden[num][2][0] = false;
     
     el = document.createElement("div");
     el.setAttribute("name", modules[num][1]);
@@ -150,6 +186,9 @@ function genTextAr(par) //Generates a textarea form component
     text[num][1]="";
     text[num][2]=[];
     text[num][2][0]="";
+    hidden[num][1]=false;
+    hidden[num][2]=[];
+    hidden[num][2][0] = false;
     
     el = document.createElement("div");
     el.setAttribute("name", modules[num][1]);
@@ -181,6 +220,8 @@ function genCheck(par) //Generates a checkbox area form component
     text[num][1] = "";
     text[num][2] = [];
     internals[num] = [];
+    hidden[num][1] = false;
+    hidden[num][2] = [];
     document.getElementById(par).appendChild(elem);
     addCheckBox(modules[num][1]);
 }
@@ -195,6 +236,7 @@ function addCheckBox(par) //Generates individual checkboxes
     l = modules[foc][2].length;
     modules[foc][2][l]="Checkbox-"+(foc+1)+"-"+(l+1);
     text[foc][2][l]="";
+    hidden[foc][2][l]=false;
     elem = document.createElement("div");
     elem.setAttribute("class","checkbox");
     elem.setAttribute("id",modules[foc][2][l]);
@@ -226,6 +268,8 @@ function genRadio(par) //Generates a radiobutton area form component
     text[num][1] = "";
     text[num][2] = [];
     internals[num] = [];
+    hidden[num][1] = false;
+    hidden[num][2] = [];
     document.getElementById(par).appendChild(elem);
     addRadioBtn(modules[num][1]);
 }
@@ -241,6 +285,7 @@ function addRadioBtn(par) //Generates individual radiobtns
     l = modules[foc][2].length;
     modules[foc][2][l]="Radiobutton-"+(foc+1)+"-"+(l+1);
     text[foc][2][l]="";
+    hidden[foc][2][l]=false;
     elem = document.createElement("div");
     elem.setAttribute("class","radiobutton");
     elem.setAttribute("id",modules[foc][2][l]);
